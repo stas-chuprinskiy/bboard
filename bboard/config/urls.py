@@ -4,7 +4,6 @@ from django.contrib.staticfiles.views import serve
 from django.urls import include, path
 from django.views.decorators.cache import never_cache
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('debug/', include('debug_toolbar.urls')),

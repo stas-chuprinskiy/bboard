@@ -1,6 +1,6 @@
 import os
-from pathlib import Path
 import socket
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -31,6 +31,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'main',
+    'users',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -71,8 +72,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.getenv('HOST'),
-        'PORT': os.getenv('PORT'),
+        'HOST': os.getenv('HOST', '127.0.0.1'),
+        'PORT': os.getenv('PORT', '5432'),
         'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
@@ -108,3 +109,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+EMAIL_PORT = 1025
